@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+    <tabs>
+      <tab  id="pyTest" label="test">
+        <group id="PyGroup" label="PyGroup">
+          <button label="test" onAction="OnTest" id="testButton" />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
+

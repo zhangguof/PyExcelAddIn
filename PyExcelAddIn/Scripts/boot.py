@@ -2,16 +2,10 @@
 
 import clr,sys
 clr.AddReference("System.Windows.Forms")
-#clr.AddReference("Microsoft.Office.Tools.Ribbon")
-
 
 from System.Windows.Forms import *
-#from Microsoft.Office.Tools.Ribbon import RibbonBase
-
 
 ExcelAddIn = None
-
-
 
 def init(namespace,ScriptPath,Libs):
 	global ExcelAddIn
@@ -19,22 +13,18 @@ def init(namespace,ScriptPath,Libs):
 	ExcelAddIn = __import__(namespace,globals(),fromlist=["*"])
 	sys.path.append(ScriptPath)
 	sys.path.append(Libs)
-	
 
-	class Ribbon1(ExcelAddIn.Ribbon):
-		def __init__(self):
-			self.Name = "TestRibbon"
-			self.RibbonType = "Microsoft.Excel.Workbook"
-	rib = Ribbon1()
-	MessageBox.Show(str(rib.__dict__))
+	import conf
 
-	
+	conf.ScriptPath = ScriptPath
+	conf.ExcelAddIn = ExcelAddIn
+
 
 
 
 def test(name):
 	return "You name is :%s"%name
 
-
-
-
+def getRibbon():
+	import xmlgui
+	return xmlgui.get_xml_ribbon(ExcelAddIn.IPyRibbon)

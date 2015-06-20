@@ -12,43 +12,65 @@ using System.Windows.Forms;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
+using Microsoft.Office.Tools.Ribbon;
+
+
 
 namespace PyExcelAddIn
 {
-    public class Ribbon : Microsoft.Office.Tools.Ribbon.RibbonBase
+
+    public interface IPyRibbon : Office.IRibbonExtensibility
     {
-        private System.ComponentModel.IContainer components = null;
-
-        public Ribbon()
-            : base(Globals.Factory.GetRibbonFactory())
-        {
-            InitializeComponent();
-        }
-        private void InitializeComponent()
-        {
-        }
-
+        void Ribbon_Load(Office.IRibbonUI ribbonUI);
+        void OnTest(Office.IRibbonControl control);
     }
+
+
+
     public partial class ThisAddIn
     {
+
         public static ScriptRuntime PyRunTime = Python.CreateRuntime();
-        public static dynamic BootMod;
-        public static string ScripPath = @"E:\VS2010\Projects\PyExcelAddIn\PyExcelAddIn\Scripts";
+        public static dynamic BootMod=null;
+        //public static string ScripPath = @"E:\VS2010\Projects\PyExcelAddIn\PyExcelAddIn\Scripts";
+        public static string ScripPath = @"H:\Visual Studio 2010\Projects\PyExcelAddIn\PyExcelAddIn\Scripts";
         public static string LibsFile = ScripPath + @"\Libs.zip";
         public static string BootFile = ScripPath + @"\boot.py";
+
+        protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
+        {
+
+            try
+            {
+                if (BootMod == null)
+                {
+                    BootMod = PyRunTime.ExecuteFile(BootFile);
+                    BootMod.init("PyExcelAddIn", ScripPath, LibsFile);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            try
+            {
+                //dynamic gui = PyRunTime.ImportModule("xmlgui");
+                return BootMod.getRibbon();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
+            }
+            
+           
+        }
 
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            try
-            {
-                BootMod = PyRunTime.ExecuteFile(BootFile);
-                BootMod.init("PyExcelAddIn", ScripPath, LibsFile);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
 
         }
 
