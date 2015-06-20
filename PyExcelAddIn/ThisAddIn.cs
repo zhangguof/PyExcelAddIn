@@ -22,7 +22,7 @@ namespace PyExcelAddIn
     public interface IPyRibbon : Office.IRibbonExtensibility
     {
         void Ribbon_Load(Office.IRibbonUI ribbonUI);
-        void OnTest(Office.IRibbonControl control);
+        void OnButtonClick(Office.IRibbonControl control);
     }
 
 
@@ -64,13 +64,26 @@ namespace PyExcelAddIn
                 MessageBox.Show(ex.ToString());
                 return null;
             }
-            
-           
+
+
         }
 
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            try
+            {
+                if (BootMod == null)
+                {
+                    BootMod = PyRunTime.ExecuteFile(BootFile);
+                    BootMod.init("PyExcelAddIn", ScripPath, LibsFile);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
         }
 

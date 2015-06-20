@@ -180,7 +180,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Ribbon1.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -200,7 +199,6 @@
     <Content Include="Libs\Microsoft.Scripting.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Ribbon1.xml" />
     <Content Include="Scripts\boot.py" />
     <Content Include="Scripts\Ribbon.xml" />
   </ItemGroup>

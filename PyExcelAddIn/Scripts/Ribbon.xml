@@ -4,7 +4,8 @@
     <tabs>
       <tab  id="pyTest" label="test">
         <group id="PyGroup" label="PyGroup">
-          <button label="test" onAction="OnTest" id="testButton" />
+          <button id="test2" label="test2" onAction="OnButtonClick"  />
+          <button id="testbtn"  label="testbtn" onAction="OnButtonClick"  />
         </group>
       </tab>
     </tabs>

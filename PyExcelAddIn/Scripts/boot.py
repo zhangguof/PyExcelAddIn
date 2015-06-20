@@ -26,5 +26,6 @@ def test(name):
 	return "You name is :%s"%name
 
 def getRibbon():
+	# return None
 	import xmlgui
 	return xmlgui.get_xml_ribbon(ExcelAddIn.IPyRibbon)
